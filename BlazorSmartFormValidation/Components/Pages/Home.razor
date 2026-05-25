@@ -2,17 +2,94 @@
 
 @using BlazorSmartFormValidation.Models
 
-<PageTitle>Registration Form</PageTitle>
+<PageTitle>User Registration Form</PageTitle>
 
 <div class="main-container">
 
-    <div class="form-check-card">
+    <div class="form-card">
 
         <div class="header-section">
             <h1>User Registration</h1>
+
             <p>
-                Form Validation using EditForm and DataAnnotations
+                Blazor Form Validation using EditForm and DataAnnotations
             </p>
         </div>
+
+        <EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+
+            <DataAnnotationsValidator />
+
+            <!-- First Name -->
+
+            <div class="input-group">
+
+                <label>First Name</label>
+
+                <InputText class="form-input"
+                           @bind-Value="user.FirstName" />
+
+                <ValidationMessage For="@(() => user.FirstName)" />
+
+            </div>
+
+            <!-- Last Name -->
+
+            <div class="input-group">
+
+                <label>Last Name</label>
+
+                <InputText class="form-input"
+                           @bind-Value="user.LastName" />
+
+                <ValidationMessage For="@(() => user.LastName)" />
+
+            </div>
+
+            <!-- Email -->
+
+            <div class="input-group">
+
+                <label>Email Address</label>
+
+                <InputText class="form-input"
+                           @bind-Value="user.Email" />
+
+                <ValidationMessage For="@(() => user.Email)" />
+
+            </div>
+
+            <!-- Button -->
+
+            <button type="submit" class="submit-btn">
+
+                Submit Form
+
+            </button>
+
+        </EditForm>
+
+        @if (isSubmitted)
+        {
+            <div class="success-message">
+
+                Form submitted successfully!
+
+            </div>
+        }
+
     </div>
+
 </div>
+
+@code {
+
+    private UserModel user = new();
+
+    private bool isSubmitted = false;
+
+    private void HandleValidSubmit()
+    {
+        isSubmitted = true;
+    }
+}
